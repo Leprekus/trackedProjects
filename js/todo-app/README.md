@@ -9,9 +9,14 @@
 * Jest
 * SuperTest
 
+# Tasks
+
+# Layout
+[] Create Layout
+
 ## Todos 
-[] Create Root Page
 [] Display All Todos
+[] Display Specific Todo By Id
 [] Add Task
 [] Delete Task
 [] Edit Task
