@@ -1,5 +1,5 @@
 const request = require('supertest')
-const todos = require('../pages/todos')
+const todos = require('../components/Todos')
 it('should run', () => {
 
 })
