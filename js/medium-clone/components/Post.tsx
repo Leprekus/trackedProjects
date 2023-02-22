@@ -15,9 +15,9 @@ interface Props{
     image: string
   }
 }
-function Post({slug, mainImage, title, description, author}: Props ) {
+function Post({slug, mainImage, title, description, author, _id, _createdAt}: PostProps ) {
   return (
-    <Link href={`/posts/${slug.current}`}>
+    <Link href={`/posts/${slug.current}`} id={_id}>
       <div className='group border rounded-lg overflow-hidden'>
         {mainImage && (
           <img

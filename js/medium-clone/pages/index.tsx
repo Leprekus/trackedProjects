@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,8 +7,9 @@ import Header from '../components/Header'
 import Post from '../components/Post'
 import { sanityClient, urlFor } from '../sanity'
 import { PostProps } from '../typings'
+
 //makes this page server-side rendered
-export const getServerSideProps = async() => {
+export const getServerSideProps:GetStaticProps = async() => {
 // fetches array of posts with following information
   const query = `*[_type == 'post'] {
     _id, 
@@ -52,6 +53,10 @@ const Home:NextPage<Props> = ({ posts }:Props) => {
             title={post.title}
             description={post.description}
             author={post.author}
+            body={post.body}
+            _id={post._id}
+            _createdAt={post._createdAt}
+            
           />
         ))}
       </div>
