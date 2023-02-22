@@ -4,10 +4,11 @@ import Image from 'next/image'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
 import { sanityClient, urlFor } from '../sanity'
+import { Post } from '../typings'
 //makes this page server-side rendered
 export const getServerSideProps = async() => {
-//fetches array of posts with following information
-  const query = `*[_type == 'post] {
+// fetches array of posts with following information
+  const query = `*[_type == 'post'] {
     _id, 
     title,
     author -> {
@@ -21,13 +22,17 @@ export const getServerSideProps = async() => {
   const posts = await sanityClient.fetch(query)
   return {
     props: {
-      posts
+      posts,
     }
   }
-
 }
 
-const Home: NextPage = (props) => {
+interface Props {
+  posts: [Post]
+}
+
+const Home:NextPage<Props> = ({ posts }:Props) => {
+  console.log(posts)
   return (
     <div className="max-w-7xl mx-auto">
       <Head>

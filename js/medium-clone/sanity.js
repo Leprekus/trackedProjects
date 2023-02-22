@@ -5,7 +5,7 @@ import {
 } from 'next-sanity';
 
 export const config = {
-    dataset: env.process.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, 
     apiVersion: '2021-10-21',
 
