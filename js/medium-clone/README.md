@@ -7,6 +7,3 @@ Using Server Side rendering for imprvoved performance and Sanity as the backend,
 * Typescript
 * Sanity 
 * Tailwindcss
-
-### Configuring Sanity 
-
