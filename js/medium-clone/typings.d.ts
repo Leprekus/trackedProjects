@@ -1,5 +1,5 @@
 //definition TS file
-export interface Post {
+export interface PostProps {
     _id: string,
     _createdAt: string,
     title: string, 
