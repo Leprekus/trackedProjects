@@ -25,5 +25,11 @@ export default defineType({
       title: 'Approved',
       type: 'boolean',
     }),
+    defineField({
+        name: 'post',
+        title: 'Post',
+        type: 'reference',
+        to: {type: 'post'},
+      }),
   ],
 })
