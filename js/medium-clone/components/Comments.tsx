@@ -23,6 +23,25 @@ function Comments({ post }:Props) {
     const onHandleSubmit:SubmitHandler<IformInput> = async(data) => {
         
         console.log('data: ', data);
+        await fetch('/api/createComment', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+        .then(res => {
+            if(!res.ok) {
+                throw new Error('Bad Response', {
+                    cause: { res }
+                })
+            }
+        })
+        .catch(e => {
+            switch (e.cause.res?.status) {
+                case 400: console.log('Bad request'); break;
+                case 401: console.log('Aunauthorized response'); break;
+                case 404: console.log('Not found'); break;
+                case 500: console.log('Internal server error'); break;
+            }
+        })
     }
   return (
     <form  onSubmit={handleSubmit(onHandleSubmit)} className='flex flex-col p-5 max-w-2xl mx-auto mb-10'>
