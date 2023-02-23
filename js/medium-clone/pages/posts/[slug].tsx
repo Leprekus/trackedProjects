@@ -112,6 +112,7 @@ function Slug({ post }:Props) {
           />
         </div>
       </article>
+      <hr className='mw-w-lg my-5 mx-auto border border-yellow-500'/>
     </div>
   )
 }
