@@ -4,6 +4,7 @@ import Header from '../../components/Header'
 import { sanityClient, urlFor } from '../../sanity'
 import { PostProps } from '../../typings'
 import PortableText from 'react-portable-text'
+import Comments from '../../components/Comments'
 //prebuilds routes in advance
 export const getStaticPaths:GetStaticPaths = async () => {
   const query = `*[_type == 'post'] {
@@ -113,6 +114,7 @@ function Slug({ post }:Props) {
         </div>
       </article>
       <hr className='mw-w-lg my-5 mx-auto border border-yellow-500'/>
+      <Comments post={post}/>
     </div>
   )
 }
