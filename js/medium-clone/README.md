@@ -8,6 +8,8 @@ Using Server Side rendering for imprvoved performance and Sanity as the backend,
 * Sanity 
 * Tailwindcss
 
+
+## Personal Notes
 ### Sanity 
 
 Configuring Sanity: 
@@ -45,3 +47,13 @@ They need to have a 'define type' and a 'define field'.
 * A reference field can point to another entity like in a relational db. 
 
 Once the schema is created it has to be imported and added to the 'schemaTypes' array in index.ts under schema folders.  
+
+## React Hook Form 
+To get data from the front end to the backend, first you have to define the form interface and assign it to the useForm hook. 
+---
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    } = useForm<IformInput>();
+---
