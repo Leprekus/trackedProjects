@@ -14,17 +14,14 @@ export default async function register(
   res: NextApiResponse
 ) {
   //these are the contents of the request
-  const { _id, name, email, comment } = JSON.parse(req.body);
+  const { name, username, email, password } = JSON.parse(req.body);
   try {
     await client.create({
-      _type: 'comment',
-      post: {
-        _type: 'reference',
-        _ref: _id,
-      },
+      _type: 'user',
       name,
+      username,
       email,
-      comment,
+      password
     });
   } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
