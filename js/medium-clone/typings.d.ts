@@ -7,6 +7,7 @@ export interface PostProps {
         name: string, 
         image: string,
     },
+    comments: Comment[],
     description: string, 
     mainImage: {
         _type: 'string'

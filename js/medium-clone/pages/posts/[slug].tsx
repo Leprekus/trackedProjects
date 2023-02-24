@@ -116,6 +116,21 @@ function Slug({ post }:Props) {
       </article>
       <hr className='mw-w-lg my-5 mx-auto border border-yellow-500'/>
       <Comments post={post}/>
+      <div className='flex flex-col p-10 my-10 max-w-2xl mx-auto
+      shadow shadow-neutral-300 space-y-2'>
+        
+        <h3 className='text-4xl'>Comments</h3>
+        <hr className='pb-2'/>
+        {post.comments.map(comment => (
+          <div key={comment._id} className='py-2'>
+            <p>
+              <span className='text-green-600'>
+                {comment.name}:
+            </span> {comment.comment}</p>
+            <p className='text-xs text-gray-500'>Published: {new Date(comment._createdAt).toLocaleDateString()}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
