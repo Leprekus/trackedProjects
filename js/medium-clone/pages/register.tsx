@@ -9,13 +9,13 @@ export default function register() {
         className='flex flex-col w-full md:w-1/2 mx-auto space-y-2 mt-32'
       >
         <h1 className='text-2xl'>Register</h1>
-        <label htmlFor=''>First Name</label>
+        <label htmlFor=''>Name</label>
         <input
           className='shadow shadow-gray-300 rounded px-3 py-0.5'
           type='text'
-          placeholder='Johnny'
+          placeholder='Johnny Appleseed'
         />
-        <label htmlFor=''>Last Name</label>
+        <label htmlFor=''>Username</label>
         <input
           className='shadow shadow-gray-300 rounded px-3 py-0.5'
           type='text'
@@ -36,8 +36,8 @@ export default function register() {
           </Link>
           <input
             type='submit'
-            className='py-1 px-5 bg-green-600 text-white rounded-full w-fit'
-            value='Sign in'
+            className='py-1 px-5 bg-green-600 text-white rounded-full w-fit cursor-pointer focus:bg-green-700'
+            value='Create Account'
           />
         </div>
       </form>
