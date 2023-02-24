@@ -49,11 +49,20 @@ They need to have a 'define type' and a 'define field'.
 Once the schema is created it has to be imported and added to the 'schemaTypes' array in index.ts under schema folders.  
 
 ## React Hook Form 
-To get data from the front end to the backend, first you have to define the form interface and assign it to the useForm hook. 
+To get data from the front end to the backend, first you have to define the form interface and assign it to the useForm hook.
+
 ---
+
     const {
     register,
     handleSubmit,
     formState: { errors },
     } = useForm<IformInput>();
+
 ---
+
+Then use the *register* attribute in each input to grab the information. 
+
+The form uses the *handleSubmit* destructured from the useForm hook to handle the form submission. This method invokes the form handler. i.e handleSubmit(doSomethingWithMyForm)
+
+Errors can be displayed by error.*inputName* && *error handlement*

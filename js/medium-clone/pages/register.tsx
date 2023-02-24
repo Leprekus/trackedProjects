@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler} from 'react-hook-form';
 
 interface UserForm {
@@ -15,37 +15,38 @@ export default function register() {
     formState: { errors },
   } = useForm<UserForm>()
 
+  const [submitted, setSubmited] = useState(false)
   const createUser: SubmitHandler<UserForm> = async (data) => {
     console.log('data: ', data);
-    // await fetch('/api/createComment', {
-    //   method: 'POST',
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error('Bad Response', {
-    //         cause: { res },
-    //       });
-    //     }
-    //     setSubmitted(true);
-    //   })
-    //   .catch((e) => {
-    //     setSubmitted(false);
-    //     switch (e.cause.res?.status) {
-    //       case 400:
-    //         console.log('Bad request');
-    //         break;
-    //       case 401:
-    //         console.log('Aunauthorized response');
-    //         break;
-    //       case 404:
-    //         console.log('Not found');
-    //         break;
-    //       case 500:
-    //         console.log('Internal server error');
-    //         break;
-    //     }
-    //   });
+    await fetch('/api/user/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Bad Response', {
+            cause: { res },
+          });
+        }
+        setSubmited(true);
+      })
+      .catch((e) => {
+        setSubmited(false);
+        switch (e.cause.res?.status) {
+          case 400:
+            console.log('Bad request');
+            break;
+          case 401:
+            console.log('Aunauthorized response');
+            break;
+          case 404:
+            console.log('Not found');
+            break;
+          case 500:
+            console.log('Internal server error');
+            break;
+        }
+      });
   }
   return (
     <div>
@@ -55,7 +56,7 @@ export default function register() {
         className='flex flex-col max-w-sm md:w-1/2 mx-auto space-y-2 mt-32 p-10'
       >
 
-        <h1 className='text-2xl'>Register</h1>
+        <h1 className='text-2xl'>{submitted ? 'Account Created Successfully!' : 'Register'}</h1>
         <label htmlFor=''>Name</label>
         <input
           {...register('name', { required: true })}
@@ -96,6 +97,10 @@ export default function register() {
             className='py-1 px-5 bg-green-600 text-white rounded-full w-fit cursor-pointer focus:bg-green-700'
             value='Create Account'
           />
+          {errors.name && <p className='text-sm text-red-500 pt-2'>- Please Include your Name</p>}
+          {errors.username && <p className='text-sm text-red-500 pt-2'>- Please Include a Username</p>}
+          {errors.email && <p className='text-sm text-red-500 pt-2'>- Please Include your Email</p>}
+          {errors.password && <p className='text-sm text-red-500 pt-2'>- Please use a Password</p>}
         </div>
       </form>
     </div>
