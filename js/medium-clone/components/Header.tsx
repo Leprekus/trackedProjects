@@ -27,8 +27,8 @@ function Header() {
       </div>
 
       <div className='flex items-center space-x-5 text-green-600'>
-        <h3 className='cursor-pointer'>Sign In</h3>
-        <h3 className='cursor-pointer  border px-4 py-1 rounded-full'>Get Started</h3>
+        <Link href='/login' className='cursor-pointer'>Sign In</Link>
+        <Link href='/register' className='cursor-pointer  border px-4 py-1 rounded-full'>Get Started</Link>
       </div>
     </header>
   );
