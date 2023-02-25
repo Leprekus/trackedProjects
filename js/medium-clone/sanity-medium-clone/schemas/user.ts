@@ -25,5 +25,10 @@ export default defineType({
       title: 'Password',
       type: 'string',
     }),
+    defineField({
+      name: 'admin',
+      title: 'Admin',
+      type: 'boolean',
+    }),
   ],
 })

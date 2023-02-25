@@ -6,7 +6,8 @@ interface UserForm {
   name: string, 
   username: string, 
   email: string,
-  password: string
+  password: string,
+  isAdmin: boolean
 }
 export default function register() {
   const { 
@@ -17,7 +18,6 @@ export default function register() {
 
   const [submitted, setSubmited] = useState(false)
   const createUser: SubmitHandler<UserForm> = async (data) => {
-    console.log('data: ', data);
     await fetch('/api/user/register', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -29,7 +29,8 @@ export default function register() {
           });
         }
         setSubmited(true);
-      })
+        return res.json()
+      }).then(data => console.log(data))
       .catch((e) => {
         setSubmited(false);
         switch (e.cause.res?.status) {
