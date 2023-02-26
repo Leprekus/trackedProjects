@@ -8,3 +8,6 @@ Spotify clone created using the Nextjs framework.
 * Next-auth
 * Typescript
 * Tailwindcss
+
+## Features 
+Protected routes - only accessible if the user is authenticated. 
