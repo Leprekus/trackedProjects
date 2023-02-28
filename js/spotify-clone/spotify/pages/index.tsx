@@ -7,9 +7,6 @@ import Layout from '../components/Layout'
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
   console.log(session)
-  if(typeof window !== 'undefined') {
-    console.log({ session })
-  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>

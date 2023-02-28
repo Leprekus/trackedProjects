@@ -18,3 +18,4 @@ User:
 
 ## Features 
 Protected routes - only accessible if the user is authenticated. 
+Middleware - protects routes from unauthenticated users 

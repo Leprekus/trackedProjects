@@ -5,7 +5,16 @@ interface Providers {
     providers: Provider[]
 }
 function login({ providers }: Providers) {
-    console.log(providers)
+    const { data: session } = useSession()
+
+    if(session) {
+        return (
+            <div>
+                <button onClick={() => signOut()}>sign out</button>
+            </div>
+        )
+    }
+
     return (
         <div>
             <img 
@@ -13,6 +22,7 @@ function login({ providers }: Providers) {
             src="https://links.papareact.com/9xl" alt=""  
             
             />
+            
             {Object.values(providers).map(provider => (
                 <div key={provider.name}>
                     <button onClick={() => signIn(provider.id, { callbackUrl: '/'})}>
@@ -20,6 +30,7 @@ function login({ providers }: Providers) {
                     </button>
                 </div>
             ))}
+
         </div>
     )
 }
