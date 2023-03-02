@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sanityClient } from '../../../sanity';
-import bcrypt from 'bcrypt';
+import Cookies from 'js-cookie';
+const bcrypt = require('bcrypt');
 
 export default async function register(
   req: NextApiRequest,
@@ -9,12 +10,15 @@ export default async function register(
   //these are the contents of the request
    const { email, password } = JSON.parse(req.body);
   let user
+  let id
   try {
     const queryString = `*[_type == 'user' && email == '${email.toLowerCase()}'] {
+        _id,
         password
     }`
     const query = await sanityClient.fetch(queryString)
     //checks that account exists
+    id = query[0]._id
     if(query.length < 1) return res.status(404).json({ message: 'email not registered' })
     //checks that passwords match
     const queriedPassword = query[0].password
@@ -23,5 +27,5 @@ export default async function register(
 } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
-    return res.status(200).json({ message: 'login successful' })
+  return res.status(200).json({ id })
 }

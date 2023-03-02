@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import Link from 'next/link'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -8,7 +9,7 @@ type Credentials = {
   password: string,
 }
 export default function login() {
-
+  console.log(Cookies.get('id'))
   const {
     register,
     handleSubmit,
@@ -18,7 +19,6 @@ export default function login() {
   } = useForm<Credentials>();
 
   const login: SubmitHandler<Credentials> = async (data) => {
-
     await fetch('/api/user/login', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -33,7 +33,7 @@ export default function login() {
               break;
             case 409:
               setError('password', {
-                message: 'passwords do not match'
+                message: 'incorrect password'
               })
               break;
             default:
@@ -44,7 +44,7 @@ export default function login() {
         }
         return res.json();
       })
-      .then((data) => console.log(data))
+      .then((data) => Cookies.set('id', data.id))
       .catch((e) => {
         console.log(e)
       });

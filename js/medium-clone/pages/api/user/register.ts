@@ -3,6 +3,10 @@ import { createClient } from '@sanity/client';
 import signToken from '../../../utils/signToken';
 import { sanityClient } from '../../../sanity';
 const bcrypt = require('bcrypt');
+
+interface Email {
+  email: string
+}
 const config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -17,16 +21,19 @@ export default async function register(
   res: NextApiResponse
 ) {
   //these are the contents of the request
-  const { name, username, email, password } = JSON.parse(req.body);
+  let { name, username, email, password } = JSON.parse(req.body);
   const tokenWithWriteAccess = process.env.SANITY_USER_TOKEN;
-  let data;
+  
+  let data
+  const lowerCaseEmail = email.toLowerCase()
   let isRegistered
   try {
-    const query = `*[_type == 'user' && email == '${email}' && true] {
+    const query = `*[_type == 'user' && email == '${lowerCaseEmail}' && true] {
         email
       }`
-    isRegistered = await sanityClient.fetch(query)
-    if(isRegistered.length > 0) return res.status(409).json({ message: 'Email already registered' })
+    const emailArray: Array<Email> = await sanityClient.fetch(query)
+    const isRegistered = emailArray.some(({ email }) => email.includes(lowerCaseEmail))
+    if(isRegistered) return res.status(409).json({ message: 'Email already registered' })
 
     data = await client.create({
       _type: 'user',
@@ -39,5 +46,6 @@ export default async function register(
   } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
-  return res.status(200).json({ message: 'account created!' });
+
+  return res.status(200).json({ message: 'account created successfuly' });
 }
