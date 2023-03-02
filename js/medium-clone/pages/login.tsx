@@ -31,12 +31,16 @@ export default function login() {
                 message: 'email not registered'
               })
               break;
+            case 409:
+              setError('password', {
+                message: 'passwords do not match'
+              })
+              break;
             default:
             throw new Error('Bad Response', {
               cause: { res },
             });
           }
-          return
         }
         return res.json();
       })

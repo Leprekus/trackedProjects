@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sanityClient } from '../../../sanity';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 export default async function register(
   req: NextApiRequest,
@@ -14,9 +14,12 @@ export default async function register(
         password
     }`
     const query = await sanityClient.fetch(queryString)
+    //checks that account exists
     if(query.length < 1) return res.status(404).json({ message: 'email not registered' })
-    return res.status(200).json({ query: query.length })
-    
+    //checks that passwords match
+    const queriedPassword = query[0].password
+    const passwordsMatch = bcrypt.compareSync(password, queriedPassword)
+    if(!passwordsMatch) return res.status(409).json({ message: 'passwords do not match' })
 } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
