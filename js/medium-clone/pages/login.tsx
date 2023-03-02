@@ -12,6 +12,7 @@ export default function login() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     watch,
   } = useForm<Credentials>();
@@ -24,9 +25,18 @@ export default function login() {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Bad Response', {
-            cause: { res },
-          });
+          switch (res.status) {
+            case 404:
+              setError('email', {
+                message: 'email not registered'
+              })
+              break;
+            default:
+            throw new Error('Bad Response', {
+              cause: { res },
+            });
+          }
+          return
         }
         return res.json();
       })

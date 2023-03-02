@@ -32,7 +32,7 @@ export default async function register(
       _type: 'user',
       name,
       username,
-      email,
+      email: email.toLowerCase(),
       password: bcrypt.hashSync(password, 8),
       admin: false,
     });

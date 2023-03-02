@@ -7,17 +7,18 @@ export default async function register(
   res: NextApiResponse
 ) {
   //these are the contents of the request
-  const { email, password } = JSON.parse(req.body);
+   const { email, password } = JSON.parse(req.body);
   let user
-  //password: bcrypt.hashSync(password, 8)
   try {
-    const query = `*[_type == 'user' && email == '${email}'] {
+    const queryString = `*[_type == 'user' && email == '${email.toLowerCase()}'] {
         password
     }`
-    user = await sanityClient.fetch(query)
+    const query = await sanityClient.fetch(queryString)
+    if(query.length < 1) return res.status(404).json({ message: 'email not registered' })
+    return res.status(200).json({ query: query.length })
     
-  } catch (e) {
+} catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
-  return res.status(200).json({ user: user || 'error' });
+    return res.status(200).json({ message: 'login successful' })
 }
