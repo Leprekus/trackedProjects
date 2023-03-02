@@ -14,11 +14,18 @@ export default async function register(
   try {
     const queryString = `*[_type == 'user' && email == '${email.toLowerCase()}'] {
         _id,
+        name,
+        email,
         password
     }`
     const query = await sanityClient.fetch(queryString)
     //checks that account exists
-    id = query[0]._id
+    user = {
+      id: query[0]._id,
+      name: query[0].name,
+      email: query[0].email,
+
+    }
     if(query.length < 1) return res.status(404).json({ message: 'email not registered' })
     //checks that passwords match
     const queriedPassword = query[0].password
@@ -27,5 +34,5 @@ export default async function register(
 } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
-  return res.status(200).json({ id })
+  return res.status(200).json({ user })
 }

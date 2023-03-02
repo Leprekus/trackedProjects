@@ -44,7 +44,7 @@ export default function login() {
         }
         return res.json();
       })
-      .then((data) => Cookies.set('id', data.id))
+      .then((data) => Cookies.set('user', data, { expires: 7 }))
       .catch((e) => {
         console.log(e)
       });
