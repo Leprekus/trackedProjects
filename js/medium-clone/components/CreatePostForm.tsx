@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { DayPicker } from 'react-day-picker';
+import { format } from 'date-fns';
 
 type Props = {
     user: {
@@ -29,6 +31,8 @@ function CreatePostForm({ user }: Props) {
         watch,
         setError
       } = useForm<CreatePostForm>();
+
+    const [selected, setSelected] = useState<Date>()
   return (
     
     <form action="" className='flex flex-col mx-auto p-10 shadow-lg shadow-neutral-300 rounded-md my-8 bg-white
@@ -47,9 +51,14 @@ function CreatePostForm({ user }: Props) {
           <label htmlFor=''>main image</label>
           <input type='text' 
           className='bg-zinc-50 rounded-md w-3/4 shadow my-2 h-10' />
-          <label htmlFor=''>Published at:</label>
-          <input type='text' 
-          className='bg-zinc-50 rounded-md w-3/4 shadow my-2 h-10' />
+        
+          <label htmlFor=''>Date</label>
+          <DayPicker
+          mode='single'
+          selected={selected}
+          onSelect={setSelected}
+          footer={selected ? (<p>You selected {format(selected, 'PPP')}.</p>) : (<p>Please pick a day.</p>)}
+          />
           <label htmlFor=''>Author</label>
           <p>user info goes here</p>
  
