@@ -4,8 +4,10 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { getUser, signOut } from '../utils/signToken';
 
-
-function UserHeader({ name }) {
+interface Props {
+  name: string
+}
+function UserHeader({ name }: Props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     if (name) {
@@ -17,7 +19,7 @@ function UserHeader({ name }) {
   }, [name]);
 
   return (
-    <header className='flex justify-between p-5 max-w-7xl mx-auto'>
+    <header className='flex justify-between p-5 max-w-7xl mx-auto bg-white shadow'>
       <Link href='/' className='text-green-600 hover:underline text-lg'>
         Home
       </Link>

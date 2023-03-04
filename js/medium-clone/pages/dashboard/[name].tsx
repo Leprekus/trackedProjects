@@ -26,11 +26,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 function Name({ profile, posts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const user = JSON.parse(profile.user)
- 
+
   return (
-    <div>
+    <div className='bg-slate-50'>
       <UserHeader name={user.name}/>
-      <CreatePostForm/>
+      <CreatePostForm user={user}/>
       {posts ? <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>Your Posts</h2>
        :       <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>No posts over here...</h2>}
       <div className='flex justify-center flex-wrap w-full'>
