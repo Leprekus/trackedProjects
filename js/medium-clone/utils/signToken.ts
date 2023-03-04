@@ -1,4 +1,5 @@
-import Cookies from 'js-cookie'
+import Cookies, { CookieAttributes } from 'js-cookie'
+import * as cookie from 'cookie'
 import { User } from '../typings'
 
 const jwt = require('jsonwebtoken')
@@ -10,7 +11,11 @@ export default function signToken(user: User) {
     return Cookies.set('user', stringifiedUser, { expires: 7, secure: true, sameSite: 'strict' })
 }
 
-export function getUser<User> () {
+export function getUser<User> (nextJsContext?:any) {
+    if(nextJsContext) {
+        const parsedCookie = cookie.parse(nextJsContext)
+        return parsedCookie
+    }
     const parsedUser = Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null
     return parsedUser
 }

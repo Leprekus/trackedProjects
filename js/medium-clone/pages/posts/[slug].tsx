@@ -77,7 +77,7 @@ function Slug({ post }:Props) {
       <Header/>
       <img 
       className='w-full h-40 object-contain'
-      src={urlFor(post.mainImage)}
+      src={urlFor(post.mainImage).toString()}
       alt="banner" />
 
       <article className='max-w-3xl mx-auto p-5'>
@@ -87,7 +87,7 @@ function Slug({ post }:Props) {
         <div className='flex items-center space-x-2'>
           <img 
           className='h-10 w-10 rounded-full'
-          src={urlFor(post.author.image)} 
+          src={urlFor(post.author.image).toString()} 
           alt="" />
           <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.author.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
         </div>
@@ -121,7 +121,7 @@ function Slug({ post }:Props) {
         
         <h3 className='text-4xl'>Comments</h3>
         <hr className='pb-2'/>
-        {post.comments.map(comment => (
+        {post.comments!.map(comment => (
           <div key={comment._id} className='py-2'>
             <p>
               <span className='text-green-600'>

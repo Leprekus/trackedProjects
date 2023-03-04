@@ -6,15 +6,15 @@ import { User } from '../../typings'
 import { getUser } from '../../utils/signToken'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const profile: User = getUser()
-  if(!profile) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false
-      }
-    }
-  }
+  const profile: User = getUser(context.req.headers.cookie)
+  // if(!profile) {
+  //   return {
+  //     redirect: {
+  //       destination: '/login',
+  //       permanent: false
+  //     }
+  //   }
+  // }
   return {
     props: {
       profile,
@@ -23,9 +23,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   
 }
 function Name({ profile }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log({ profile })
   return (
     <div>
-      <UserHeader name={profile.user.name}/>
+      {/* <UserHeader name={profile.user.name}/> */}
     </div>
   )
 }
