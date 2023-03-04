@@ -26,7 +26,6 @@ export default async function register(
   
   let data
   const lowerCaseEmail = email.toLowerCase()
-  let isRegistered
   try {
     const query = `*[_type == 'user' && email == '${lowerCaseEmail}' && true] {
         email
@@ -46,6 +45,6 @@ export default async function register(
   } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
-
+  signToken(data)
   return res.status(200).json({ message: 'account created successfuly' });
 }

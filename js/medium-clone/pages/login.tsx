@@ -1,15 +1,15 @@
 import Cookies from 'js-cookie';
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { sanityClient } from '../sanity';
+import signToken, { getUser } from '../utils/signToken';
 
 type Credentials = {
   email: string, 
   password: string,
 }
 export default function login() {
-  console.log(Cookies.get('id'))
   const {
     register,
     handleSubmit,
@@ -17,7 +17,18 @@ export default function login() {
     formState: { errors },
     watch,
   } = useForm<Credentials>();
+  const profile = getUser()
+  useEffect(() => {
+    if(profile) {
+      setIsLoggedIn(true)
+   
+    }
+    if(!profile) {
+      setIsLoggedIn(false)
+    }
+  }, [profile])
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const login: SubmitHandler<Credentials> = async (data) => {
     await fetch('/api/user/login', {
       method: 'POST',
@@ -42,18 +53,19 @@ export default function login() {
             });
           }
         }
+        setIsLoggedIn(true)
         return res.json();
       })
-      .then((data) => Cookies.set('user', data, { expires: 7 }))
+      .then((data) => signToken(data))
       .catch((e) => {
-        console.log(e)
+        console.log({ e })
       });
   
     }
   return (
     <div>
     <form action="" onSubmit={handleSubmit(login)} className='flex flex-col w-full md:w-1/2 mx-auto space-y-2 mt-32'>
-        <h1 className='text-2x'>Login</h1>
+        <h1 className='text-2x'>{isLoggedIn ? `Welcome Back ${profile?.user?.name }`: 'Login'}</h1>
         <label htmlFor="">Email</label>
         <input 
         {...register('email', { required: 'Please type in your email' })}
