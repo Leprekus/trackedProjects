@@ -43,7 +43,8 @@ function Header() {
       {
         isLoggedIn ? 
         <>
-        <Link href=''>{profile?.user?.name}'s Dashboard</Link>
+        <Link href={`/dashboard/${profile.user.name}`} className='text-white bg-green-600 
+          px-4 py-2 rounded-full cursor-pointer'>{profile?.user?.name}'s Dashboard</Link>
         <button onClick={() =>signOut(setIsLoggedIn)}>Sign out</button>
         </>
         :
