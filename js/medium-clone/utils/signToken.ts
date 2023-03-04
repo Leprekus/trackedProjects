@@ -18,3 +18,9 @@ export function getUser<User> () {
     const parsedUser = Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null
     return parsedUser
 }
+
+export function signOut(isLoggedIn: Function): void {
+    isLoggedIn(false)
+    Cookies.remove('user')
+    console.log('singed out')
+}
