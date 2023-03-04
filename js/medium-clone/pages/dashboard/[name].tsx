@@ -1,5 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import React from 'react'
+import CreatePostForm from '../../components/CreatePostForm'
 import Header from '../../components/Header'
 import UserHeader from '../../components/UserHeader'
 import { User } from '../../typings'
@@ -29,8 +30,12 @@ function Name({ profile, posts }: InferGetServerSidePropsType<typeof getServerSi
   return (
     <div>
       <UserHeader name={user.name}/>
-      <button className='bg-green-600 py-2 px-4 text-white rounded-sm active:bg-green-700'> Create post</button>
-      {posts ? posts : <h2 className='text-2xl text-gray-400 font-semibold'>No posts over here...</h2>}
+      <CreatePostForm/>
+      {posts ? <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>Your Posts</h2>
+       :       <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>No posts over here...</h2>}
+      <div className='flex justify-center flex-wrap w-full'>
+        {posts}
+      </div>
     </div>
   )
 }
