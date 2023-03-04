@@ -1,13 +1,9 @@
 import Cookies from 'js-cookie'
+import { User } from '../typings'
 
 const jwt = require('jsonwebtoken')
 
-type User = {
-    _id: string, 
-    name: string, 
-    email: string,
-    admin: boolean 
-}
+
 export default function signToken(user: User) {
     const stringifiedUser = JSON.stringify(user)
     //set to expire in 7 days

@@ -37,3 +37,10 @@ export interface Comment {
     _type: string, 
     _updatedAt: string
 }
+
+export type User = {
+    _id: string, 
+    name: string, 
+    email: string,
+    admin: boolean 
+}
