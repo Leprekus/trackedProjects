@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import signToken from '../utils/signToken';
 
 interface UserForm {
   name: string;
@@ -12,7 +13,7 @@ interface UserForm {
 }
 export default function register() {
   //import userInfo <- has info on whether user is logged in
-  
+ 
   const {
     register,
     handleSubmit,
@@ -46,7 +47,7 @@ export default function register() {
         setSubmited(true);
         return res.json();
       })
-      .then((data) => console.log(data))
+      .then((data) => signToken(data.user))
       .catch((e) => {
         setSubmited(false);
         console.log(e)

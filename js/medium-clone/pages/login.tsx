@@ -56,7 +56,7 @@ export default function login() {
         setIsLoggedIn(true)
         return res.json();
       })
-      .then((data) => signToken(data))
+      .then((data) => signToken(data.user))
       .catch((e) => {
         console.log({ e })
       });
@@ -65,7 +65,7 @@ export default function login() {
   return (
     <div>
     <form action="" onSubmit={handleSubmit(login)} className='flex flex-col w-full md:w-1/2 mx-auto space-y-2 mt-32'>
-        <h1 className='text-2x'>{isLoggedIn ? `Welcome Back ${profile?.user?.name }`: 'Login'}</h1>
+        <h1 className='text-2x'>{isLoggedIn ? `Welcome Back ${profile?.name }`: 'Login'}</h1>
         <label htmlFor="">Email</label>
         <input 
         {...register('email', { required: 'Please type in your email' })}
