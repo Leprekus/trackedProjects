@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@sanity/client';
+import { uid } from 'uid';
 const config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -35,6 +36,7 @@ export default async function createComment(
       body,
       mainImage,
       publishedAt,
+      slug: uid()
       
     });
   } catch (e) {
