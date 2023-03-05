@@ -50,7 +50,9 @@ function CreatePostForm({ user }: Props) {
           });
         }
         setSubmitted(true);
+        return res.json()
       })
+      .then(data => console.log( data ))
       .catch((e) => {
         setSubmitted(false);
         switch (e.cause.res?.status) {
@@ -64,10 +66,11 @@ function CreatePostForm({ user }: Props) {
             console.log('Not found');
             break;
           case 500:
-            console.log('Internal server error');
+            console.log('Internal server error', { e });
             break;
         }
       });
+    console.log(newData)
   }
  
   return (

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@sanity/client';
 import { uid } from 'uid';
+import isUnique from '../../../utils/isUnique';
 const config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -24,21 +25,43 @@ export default async function createComment(
     publishedAt,
     author,
    } = JSON.parse(req.body);
+   
   try {
+    const slugQuery = ``
     await client.create({
-      _type: 'post',
+      _type: 'userPost',
       user: {
         _type: 'user',
         _ref: id,
       },
       title,
       description,
-      body,
-      mainImage,
-      publishedAt,
-      slug: uid()
-      
+      slug: {
+        current: 'test'
+       
+      },
+      body: [body],
+      // mainImage,
+      // publishedAt,
     });
+  
+    // const mutations = [{
+    //     delete: {
+    //       id: 'rN1qi54kvWKs5FTfdnVwsL',
+    //     }
+    //   }]
+    //   const del = fetch(`https://${config.projectId}.api.sanity.io/v2021-06-07/data/mutate/${config.dataset}`, {
+    //     method: 'post',
+    //     headers: {
+    //       'Content-type': 'application/json',
+    //       Authorization: `Bearer ${config.token}`
+    //     },
+    //     body: JSON.stringify({mutations})
+    //   })
+    //     .then(response => response.json())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.error(error))
+    //     return res.status(200).json({ del })
   } catch (e) {
     return res.status(500).json({ message: 'Could not submit', e });
   }
