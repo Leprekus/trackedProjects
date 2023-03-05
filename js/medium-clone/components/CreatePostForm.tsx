@@ -35,7 +35,7 @@ function CreatePostForm({ user }: Props) {
   const [submitted, setSubmitted] = useState(false)
 
   const handleCreatePost: SubmitHandler<CreatePostFormProps> = async (data) => {
-    const date = selected === today ? format(selected, 'PPP') : selected?.toString()
+    const date = selected?.toISOString()
     const newData = {
         ...data, 
         publishedAt: date
@@ -128,9 +128,9 @@ function CreatePostForm({ user }: Props) {
         {' '}
         Create post
       </button>
-      <Alert
+      {submitted && <Alert
       severity='alert'
-      >Post created successfuly</Alert>
+      >Post created successfuly</Alert>}
     </form>
   );
 }
