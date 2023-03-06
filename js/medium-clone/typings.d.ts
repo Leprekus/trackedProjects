@@ -3,7 +3,7 @@ export interface PostProps {
     _id: string,
     _createdAt: string,
     title: string, 
-    author: {
+    user: {
         name: string, 
         image: string,
     },

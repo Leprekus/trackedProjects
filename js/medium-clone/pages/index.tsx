@@ -11,10 +11,10 @@ import { PostProps } from '../typings'
 //makes this page server-side rendered
 export const getServerSideProps:GetStaticProps = async() => {
 // fetches array of posts with following information
-  const query = `*[_type == 'post'] {
+  const query = `*[_type == 'userPost'] {
     _id, 
     title,
-    author -> {
+    user -> {
       name, 
       image,
     },
@@ -52,7 +52,7 @@ const Home:NextPage<Props> = ({ posts }:Props) => {
             mainImage={post.mainImage}
             title={post.title}
             description={post.description}
-            author={post.author}
+            user={post.user}
             body={post.body}
             _id={post._id}
             _createdAt={post._createdAt}
