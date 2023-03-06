@@ -5,7 +5,18 @@ import { sanityClient, urlFor } from '../../sanity'
 import { PostProps } from '../../typings'
 import PortableText from 'react-portable-text'
 import Comments from '../../components/Comments'
-//prebuilds routes in advance
+
+import userPNG from '../../assets/user.png'
+import blogPlaceholder from '../../assets/placeholder-image.png'
+import dynamic from 'next/dynamic'
+
+// const PortableText = dynamic(() => import('react-portable-text'), {
+//   ssr: false
+// })
+// const Header = dynamic(() => import('../../components/Header'), {
+//   ssr: false
+// })
+//prebuilds routes
 export const getStaticPaths:GetStaticPaths = async () => {
   const query = `*[_type == 'post'] {
     _id, 
@@ -32,11 +43,11 @@ export const getStaticPaths:GetStaticPaths = async () => {
 export const getStaticProps:GetStaticProps = async ({ params }) => {
   //$slug acts as a placeholder
   //res is an array and [0] returns first item
-  const query = `*[_type =='post' && slug.current == $slug][0]{
+  const query = `*[_type =='userPost' && slug.current == $slug][0]{
     _id, 
     _createdAt, 
     title, 
-    author -> {
+    user -> {
       name, 
       image, 
     }, 
@@ -64,7 +75,7 @@ export const getStaticProps:GetStaticProps = async ({ params }) => {
     props: {
       post,
     },
-    revalidate: 60, //updates cached version after 60 seconds
+    revalidate: 120, //updates cached version after 60 seconds
   }
 }
 interface Props {
@@ -77,7 +88,7 @@ function Slug({ post }:Props) {
       <Header/>
       <img 
       className='w-full h-40 object-contain'
-      src={urlFor(post.mainImage).toString()}
+      src={post.mainImage !== null ? urlFor(post.mainImage).toString() : blogPlaceholder.src}
       alt="banner" />
 
       <article className='max-w-3xl mx-auto p-5'>
@@ -87,9 +98,9 @@ function Slug({ post }:Props) {
         <div className='flex items-center space-x-2'>
           <img 
           className='h-10 w-10 rounded-full'
-          src={urlFor(post.author.image).toString()} 
+          src={post.user.image !== null ? urlFor(post.mainImage).toString() : userPNG.src} 
           alt="" />
-          <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.author.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
+          <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.user.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
         </div>
         <div className='mt-10'>
           <PortableText
