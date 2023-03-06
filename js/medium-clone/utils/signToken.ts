@@ -16,7 +16,7 @@ export function getUser<User> (nextJsContext?:any) {
         const parsedCookie = cookie.parse(nextJsContext)
         return parsedCookie
     }
-    const parsedUser = Cookies.get('user') ? JSON.parse(Cookies.get('user')!) : null
+    const parsedUser = Cookies.get('user') !== undefined ? JSON.parse(Cookies.get('user')!) : null
     return parsedUser
 }
 
