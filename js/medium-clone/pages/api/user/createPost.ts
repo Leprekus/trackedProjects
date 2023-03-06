@@ -48,7 +48,7 @@ export default async function createComment(
       body,
 
       // mainImage,
-      // publishedAt,
+      publishedAt,
     });
 
     // const mutations = [{
