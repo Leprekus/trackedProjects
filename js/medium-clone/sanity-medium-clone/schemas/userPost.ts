@@ -42,9 +42,10 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+    //switch to blockContent / block
       name: 'body',
       title: 'Body',
-      type: 'blockContent',
+      type: 'string',
     }),
     defineField({
       name: 'user',

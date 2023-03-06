@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import dynamic from 'next/dynamic'
 import React from 'react'
-import CreatePostForm from '../../components/CreatePostForm'
 import Header from '../../components/Header'
 import UserHeader from '../../components/UserHeader'
 import { User } from '../../typings'
@@ -24,6 +24,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   
 }
+
+const CreatePostForm = dynamic(() => import('../../components/CreatePostForm'), {
+  ssr: false
+})
 function Name({ profile, posts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const user = JSON.parse(profile.user)
 

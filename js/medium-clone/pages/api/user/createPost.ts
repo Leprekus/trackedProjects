@@ -27,7 +27,12 @@ export default async function createComment(
    } = JSON.parse(req.body);
    
   try {
-    const slugQuery = ``
+    const slugQueryString = `*[_type =='userPost'] {
+      slug {
+        current
+      }
+    }`
+    const slugs = await client.fetch(slugQueryString)
     await client.create({
       _type: 'userPost',
       user: {
@@ -37,14 +42,15 @@ export default async function createComment(
       title,
       description,
       slug: {
-        current: 'test'
+        current: isUnique(title, slugs)
        
       },
-      body: [body],
+      body,
+
       // mainImage,
       // publishedAt,
     });
-  
+
     // const mutations = [{
     //     delete: {
     //       id: 'rN1qi54kvWKs5FTfdnVwsL',

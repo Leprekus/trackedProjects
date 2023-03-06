@@ -4,6 +4,9 @@ import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import Alert from './Alert';
 
+import ReactQuill from "react-quill"
+import 'react-quill/dist/quill.snow.css'
+
 type Props = {
   user: {
     id: string;
@@ -33,11 +36,17 @@ function CreatePostForm({ user }: Props) {
   const today = new Date()
   const [selected, setSelected] = useState<Date | undefined>(today);
   const [submitted, setSubmitted] = useState(false)
+  const [convertedText, setConvertedText] = useState('');
 
+  const handleEditorChange = (state:any) => {
+    console.log(convertedText)
+    setConvertedText(state)
+  }
   const handleCreatePost: SubmitHandler<CreatePostFormProps> = async (data) => {
     const date = selected?.toISOString()
     const newData = {
         ...data, 
+        body: convertedText,
         publishedAt: date
     }
     await fetch('/api/user/createPost', {
@@ -97,11 +106,16 @@ function CreatePostForm({ user }: Props) {
         className='bg-zinc-50 rounded-md w-3/4 shadow my-2 h-10'
       />
 
-      <label htmlFor=''>Body</label>
-      <textarea 
-      {...register('body', { required: 'Please give a body to your article' })}
-      className='bg-zinc-50 rounded-md w-3/4 shadow-md my-2 h-48 resize-none' />
-        {errors.body && <p className='text-red-400'>{errors.title?.message}</p>}
+        <div className='mb-16'>
+        <ReactQuill
+        theme='snow'
+        value={convertedText}
+        onChange={handleEditorChange}
+        placeholder='Write down your ideas!'
+        className='h-96'
+      />
+      </div>
+      
 
       <label htmlFor=''>main image</label>
       <input
