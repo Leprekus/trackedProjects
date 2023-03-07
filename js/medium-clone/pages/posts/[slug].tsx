@@ -3,19 +3,11 @@ import React from 'react'
 import Header from '../../components/Header'
 import { sanityClient, urlFor } from '../../sanity'
 import { PostProps } from '../../typings'
-import PortableText from 'react-portable-text'
 import Comments from '../../components/Comments'
 
 import userPNG from '../../assets/user.png'
 import blogPlaceholder from '../../assets/placeholder-image.png'
-import dynamic from 'next/dynamic'
 
-// const PortableText = dynamic(() => import('react-portable-text'), {
-//   ssr: false
-// })
-// const Header = dynamic(() => import('../../components/Header'), {
-//   ssr: false
-// })
 //prebuilds routes
 export const getStaticPaths:GetStaticPaths = async () => {
   const query = `*[_type == 'post'] {
@@ -103,26 +95,6 @@ function Slug({ post }:Props) {
           <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.user.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
         </div>
         <div className='mt-10'>
-          {/* <PortableText
-            dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
-            projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
-            content={post.body!}
-            //serializers are used to dictate how the HTML is parsed
-            serializers={{
-              h1: (props: any) => (
-                <h1 className='text-2xl font-bold my-5'{ ...props }/>
-              ),
-              h2: (props: any) => (
-                <h1 className='text-xl font-bold my-5'{ ...props }/>
-              ),
-              li: ({ children }: any) => (
-                <li className='ml-4 list-disc'>{ children }</li>
-              ),
-              ul: ({ href, children }: any) => (
-                <a href={ href } className='text-blue-500 hover:underline'>{ children }</a>
-              )
-            }}
-          /> */}
           <div dangerouslySetInnerHTML={{__html: post.body?.toString()!}}></div>
         </div>
       </article>
