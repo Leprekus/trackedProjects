@@ -20,8 +20,8 @@ export function getUser<User> (nextJsContext?:any) {
     return parsedUser
 }
 
-export function signOut(isLoggedIn: Function): void {
-    isLoggedIn(false)
+export function signOut(callback: Function): void {
+    callback()
     Cookies.remove('user')
     console.log('singed out')
 }

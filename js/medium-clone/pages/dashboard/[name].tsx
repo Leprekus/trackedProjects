@@ -11,7 +11,16 @@ import { PostData } from '../../typings'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const profileData = getUser(context.req.headers.cookie)
-  const user:User = JSON.parse(profileData.user)
+  const user:User = profileData ? JSON.parse(profileData?.user) : null
+
+  if(!user) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
 
   const query = `*[ _type == 'userPost' && user._ref == '${user.id}']  {
     _id, 
@@ -25,17 +34,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     slug,
     _createdAt
   }`
-  const posts: Array<PostData> = await sanityClient.fetch(query) 
+  const posts: Array<PostData> = await sanityClient.fetch(query) ?? [] 
   //const posts = await postData.json() ?? []
   //const posts = await 
-  if(!user) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false
-      }
-    }
-  }
   return {
     props: {
       user,
@@ -49,12 +50,11 @@ const CreatePostForm = dynamic(() => import('../../components/CreatePostForm'), 
   ssr: false
 })
 function Name({ user, posts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-console.log(posts)
   return (
     <div className='bg-slate-50'>
       <UserHeader name={user.name}/>
       <CreatePostForm user={user}/>
-      {posts ? <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>Your Posts</h2>
+      {posts.length < 1 ? <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>Your Posts</h2>
        :       <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>No posts over here...</h2>}
       <div className='flex justify-center flex-wrap w-full'>
         {posts.map((data:PostData, i:number) =>(
