@@ -82,7 +82,7 @@ interface Props {
   post:PostProps
 }
 function Slug({ post }:Props) {
-  console.log(post)
+  console.log(post.body)
   return (
     <div>
       <Header/>
@@ -106,7 +106,7 @@ function Slug({ post }:Props) {
           <PortableText
             dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
             projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
-            content={post.body}
+            content={post.body!}
             //serializers are used to dictate how the HTML is parsed
             serializers={{
               h1: (props: any) => (

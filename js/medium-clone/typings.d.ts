@@ -19,7 +19,38 @@ export interface PostProps {
     slug: {
         current: string
     },
-    body: [object]
+    body?: [object]
+}
+export interface PostData {
+    // id: string,
+    // createdAt: string,
+    // title: string, 
+    // user: {
+    //     name: string, 
+    //     image: string,
+    // },
+    // comments?: Comment[],
+    // description: string, 
+    // mainImage: {
+    //     _type: 'string'
+    //     asset: {
+    //         //_ref: 'string',
+    //         url: 'string'
+    //     },
+    // },
+    // slug: {
+    //     current: string
+    // },
+    // body: [object]
+    //
+    slug
+    id
+    createdAt
+    title
+    user
+    description
+    mainImage
+    body
 }
 
 export interface Comment {
@@ -39,8 +70,10 @@ export interface Comment {
 }
 
 export type User = {
-    _id: string, 
-    name: string, 
-    email: string,
-    admin: boolean 
+     
+        id: string, 
+        name: string, 
+        email: string,
+        admin?: boolean 
+   
 }

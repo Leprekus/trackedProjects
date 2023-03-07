@@ -86,3 +86,8 @@ Delete a Document in Sanity:
         .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.error(error))
+
+## Todo
+- [ ] render user posts in dashboard
+- [ ] Protect user routes 
+- [ ] add post preview in user dashboard
