@@ -82,7 +82,7 @@ interface Props {
   post:PostProps
 }
 function Slug({ post }:Props) {
-  console.log(post.body)
+  console.log(typeof post.body)
   return (
     <div>
       <Header/>
@@ -103,7 +103,7 @@ function Slug({ post }:Props) {
           <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.user.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
         </div>
         <div className='mt-10'>
-          <PortableText
+          {/* <PortableText
             dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
             projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
             content={post.body!}
@@ -122,7 +122,8 @@ function Slug({ post }:Props) {
                 <a href={ href } className='text-blue-500 hover:underline'>{ children }</a>
               )
             }}
-          />
+          /> */}
+          <div dangerouslySetInnerHTML={{__html: post.body?.toString()!}}></div>
         </div>
       </article>
       <hr className='mw-w-lg my-5 mx-auto border border-yellow-500'/>

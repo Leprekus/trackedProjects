@@ -80,6 +80,7 @@ function CreatePostForm({ user }: Props) {
         }
       });
     console.log(newData)
+    console.log(JSON.stringify(window.HTMLBodyElement, null ,2))
   }
  
   return (
@@ -113,6 +114,7 @@ function CreatePostForm({ user }: Props) {
         onChange={handleEditorChange}
         placeholder='Write down your ideas!'
         className='h-96'
+
       />
       </div>
       
