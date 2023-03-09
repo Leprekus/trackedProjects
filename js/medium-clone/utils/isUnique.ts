@@ -28,6 +28,7 @@ export default function isUnique(title: string, query: Array<Query>) {
       return slugify;
   }
   //if duplicate slug:
+  //returns array of ['last', 'words', 'in', 'slug']
   const parsedSlugs = slugs.map<number>(slug => {
       const split = slug.split('-')
       const sliced:string = split.slice(split.length - 1).toString()
@@ -37,7 +38,7 @@ export default function isUnique(title: string, query: Array<Query>) {
     if(parsedSlugs.length === 1 && isNaN(parsedSlugs[0])) {
         return `${slugify}-${1}`
     }
-  //if multiple duplicates grab biggest counter and add 1 & removes NaN from array
+  //if multiple duplicates: grab biggest counter, add 1 & remove NaN from array
   const sortedSlugs = parsedSlugs.filter(num => !isNaN(num)).sort((a:number, b:number)=> a - b)
   let counter = sortedSlugs[sortedSlugs.length - 1] > 0 ? sortedSlugs[sortedSlugs.length - 1] : 0
   return `${slugify}-${counter += 1}`

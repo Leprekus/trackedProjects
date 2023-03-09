@@ -54,8 +54,8 @@ function Name({ user, posts }: InferGetServerSidePropsType<typeof getServerSideP
     <div className='bg-slate-50'>
       <UserHeader name={user.name}/>
       <CreatePostForm user={user}/>
-      {posts.length < 1 ? <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>Your Posts</h2>
-       :       <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>No posts over here...</h2>}
+      {posts.length < 1 ? <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>No posts over here...</h2>
+       :       <h2 className='text-2xl text-gray-400 font-semibold my-12 mx-auto w-fit'>Your Posts</h2>}
       <div className='flex justify-center flex-wrap w-full'>
         {posts.map((data:PostData, i:number) =>(
           <Post 
