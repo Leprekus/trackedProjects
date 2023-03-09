@@ -22,22 +22,22 @@ function Post({slug, mainImage, title, description, user, _id, _createdAt}: Post
     <Link href={`/posts/${slug.current}`} id={_id}>
       <div className='group border rounded-lg overflow-hidden'>
        
-          <img
+          {/* <img
             className='h-60 w-full object-cover group-hover:scale-105 transition-transform ease-in-out'
             src={mainImage !== null ? urlFor(mainImage).url() : blogPlaceholder.src}
             alt='post thumbnail'
-          />
+          /> */}
         
         <div className='flex justify-between p-5 bg-white'>
           <div>
             <p className='text-lg font-bold'>{title}</p>
             <p className='text-xs'>{`${description} by ${user.name}`}</p>
           </div>
-          <img
+          {/* <img
             className='h-12 w-12 rounded-full'
             src={mainImage !== null ? urlFor(user.image).url() : userPNG.src}
             alt='author thumbnail'
-          />
+          /> */}
         </div>
       </div>
     </Link>

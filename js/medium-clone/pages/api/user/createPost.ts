@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@sanity/client';
 import { uid } from 'uid';
+import userPNG from '../../../assets/user.png'
 import isUnique from '../../../utils/isUnique';
 const config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
@@ -46,14 +47,14 @@ export default async function createComment(
        
       },
       body,
-
-      // mainImage,
       publishedAt,
     });
+    
+    
 
     // const mutations = [{
     //     delete: {
-    //       id: 'rN1qi54kvWKs5FTfdnVwsL',
+    //       id: '3758xqEtuLW8gQeE8oGHzj',
     //     }
     //   }]
     //   const del = fetch(`https://${config.projectId}.api.sanity.io/v2021-06-07/data/mutate/${config.dataset}`, {

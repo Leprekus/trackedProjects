@@ -119,12 +119,12 @@ function CreatePostForm({ user }: Props) {
       </div>
       
 
-      <label htmlFor=''>main image</label>
+      {/* <label htmlFor=''>main image</label>
       <input
         {...register('mainImage')}
         type='text'
         className='bg-zinc-50 rounded-md w-3/4 shadow my-2 h-10'
-      />
+      /> */}
 
       <label htmlFor=''>Date</label>
       <DayPicker
