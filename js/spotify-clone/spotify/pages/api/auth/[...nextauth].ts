@@ -10,6 +10,7 @@ export const authOptions:AuthOptions = {
     }),
     // ...add more providers here
   ],
+  secret: process.env.NEXT_SECRET,
   callbacks: {
     async jwt({ token, account }) {
       //Persistent OAuth access token
