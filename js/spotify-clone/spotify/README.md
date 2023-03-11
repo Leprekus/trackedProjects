@@ -1,21 +1,11 @@
-# Spotify Nextjs
+# Spotify Clone
+The purpose of this project is to recreate Spotify's complete functionality using the Nextjs framework. I also plan on adding some custom features, but at the time of writing I still do not clearly know what I would like to add. 
 
-Spotify clone created using the Nextjs framework. 
+## Technologies used
 
-## Todos
-
-- [] find out how to get access token 
-- [] find out how to fetch data
-
-User:
-- [] get User Profile
-## Technologies 
-
-* Nextjs
-* Next-auth
-* Typescript
-* Tailwindcss
-
-## Features 
-Protected routes - only accessible if the user is authenticated. 
-Middleware - protects routes from unauthenticated users 
+* NEXTJS
+* NEXT-AUTH
+* REACT
+* TS
+* JWT
+* Spotify Web API JS
