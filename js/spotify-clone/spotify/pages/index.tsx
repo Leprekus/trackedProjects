@@ -1,8 +1,11 @@
 import type { NextPage } from 'next'
+import { signIn, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 
 const Home: NextPage = () => {
+  const { data: session } = useSession()
+  console.log(session)
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -24,7 +27,7 @@ const Home: NextPage = () => {
             pages/index.tsx
           </code>
         </p>
-
+          <button onClick={() => signIn()}>Sign in</button>
         <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
           <a
             href="https://nextjs.org/docs"

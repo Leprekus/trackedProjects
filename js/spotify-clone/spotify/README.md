@@ -9,3 +9,7 @@ The purpose of this project is to recreate Spotify's complete functionality usin
 * TS
 * JWT
 * Spotify Web API JS
+
+## Next-auth
+Wrapping the the app in SessionProvider keeps the app in sync with the server. 
+The "useSession" hook is used to check whether a user is authetnticated. 
