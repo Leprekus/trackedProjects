@@ -55,3 +55,7 @@ declare module "next-auth" {
     accessToken: string,
   }
 }```
+
+## Design Choices
+
+The app will only use the api routes from nextjs to handle authentication. The requests to spotify will be handled on the frontend with spotifyWebApi. 

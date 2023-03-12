@@ -13,7 +13,7 @@ const Home: NextPage = () => {
       signIn()
     }
   }, [ session ])
-  console.log(session)
+  console.log(session?.accessToken)
   //goes inside header
   const fetchUser = async () => {
     const request = await fetch('/api/user')
