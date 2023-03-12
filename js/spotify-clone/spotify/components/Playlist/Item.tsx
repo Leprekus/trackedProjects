@@ -7,17 +7,23 @@ interface Props {
 function Item({ data }: Props) {
   console.log(data);
   return (
-    <div className='bg-slate-600 w-52 h-80 rounded-xl 
-    overflow-hidden transition-all
-    hover:shadow-lg hover:shadow-slate-500 hover:ease-in'>
-      {/* {data.album.images.map((image) => (
-        <img src={image.url} alt='playlist-cover' />
-      ))} */}
-      <img 
-      className='h-full w-ful object-cover transition-all 
-      hover:scale-105 hover:ease-in hover:duration-75' 
+    <div className='w-52 h-80 rounded-xl overflow-hidden'
+    style={{ backgroundImage: `url(${data.album.images[0].url})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}
+    >
+      {/* <img 
+      className='h-full w-full object-cover transition-all 
+      hover:scale-105 hover:ease-in hover:duration-75
+      z-0' 
       src={data.album.images[0].url} 
-      alt='playlist-cover' />
+      alt='playlist-cover' /> */}
+      <div className='h-80 w-52 pl-4 py-3 flex items-end cursor-pointer' 
+      style={{ backgroundColor: 'rgba(0,0,0,0.2)'}}
+      >
+        <div className='w-5/6 max-h-36 overflow-hidden'>
+          <p className='text-md text-white z-10 relative font-semibold'>{ data.name }</p>
+          {data.name !== data.album.name && <p className='text-xs text-white z-10 relative font-semibold'>{ data.album.name }</p>}
+        </div>
+      </div>
     </div>
   );
 }

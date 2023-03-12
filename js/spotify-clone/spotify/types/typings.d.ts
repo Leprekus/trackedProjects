@@ -31,6 +31,7 @@ export type Tracks = {
       uri: string;
     }[];
     images: Image[];
+    name: string
   };
   artists: {
     external_urls: {

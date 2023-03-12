@@ -24,11 +24,13 @@ function Playlist() {
 
     console.log(playlists.body?.items)
   return (
-    <div 
-    className='w-fit h-80 gap-x-1 flex overflow-x-hidden'>
-        {playlists?.body?.items ? playlists.body.items.map(data =>(
-        <Item key={data.id} data={data}/>
-    )): []}
+    <div className='w-full h-fit overflow-x-scroll'>
+        <div
+        className='w-fit h-80 gap-x-1 flex'>
+            {playlists?.body?.items ? playlists.body.items.map(data =>(
+            <Item key={data.id} data={data}/>
+        )): []}
+        </div>
     </div>
   )
 }
