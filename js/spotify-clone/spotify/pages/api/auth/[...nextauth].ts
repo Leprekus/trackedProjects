@@ -1,4 +1,5 @@
-import NextAuth, { AuthOptions } from "next-auth"
+import  { AuthOptions, Session } from "next-auth"
+import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
 export const authOptions:AuthOptions = {
   // Configure one or more authentication providers
@@ -14,14 +15,16 @@ export const authOptions:AuthOptions = {
   callbacks: {
     async jwt({ token, account }) {
       //Persistent OAuth access token
+      //called whenever JWT is created
       if(account) {
-        token.accessToken = account.access_token
+        token.accessToken = account.access_token!
       }
       return token
     },
     //Send token props to client
-    async session({ session, token, user }) {
+    async session({ session, token, user }){
       session.accessToken = token.accessToken
+      
       return session
     }
   }

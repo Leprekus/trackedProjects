@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -28,6 +28,7 @@ const Home: NextPage = () => {
           </code>
         </p>
           <button onClick={() => signIn()}>Sign in</button>
+          <button onClick={() => signOut()}>Sign Out</button>
         <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
           <a
             href="https://nextjs.org/docs"
