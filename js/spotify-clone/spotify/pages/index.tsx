@@ -2,10 +2,20 @@ import type { NextPage } from 'next'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
+
+  //goes inside header
   const { data: session } = useSession()
+  useEffect(() => {
+    if(session?.error === 'RefreshAccessTokenError') {
+      signIn()
+    }
+  }, [ session ])
   console.log(session)
+  //goes inside header
+  
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
