@@ -18,6 +18,7 @@ export const authOptions:AuthOptions = {
     async jwt({ token, account, user }):Promise<JWT>{
       //Persistent OAuth access token
       //called whenever JWT is created
+
       if(account && user) {
         return {
           ...token,

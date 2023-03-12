@@ -1,6 +1,7 @@
 import { getSession, useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
 import { Context } from 'vm'
+import Layout from '../components/Layout'
 import Playlist from '../components/Playlist/Playlist'
 import useSpotify from '../hooks/useSpotify'
 import spotifyWebApi from '../utils/SpotifyApi'
@@ -16,7 +17,7 @@ export async function getServerSideProps(context:Context) {
 function home({ }) {
   
   return (
-    <div className='max-w-7xl mx-auto' >
+    <Layout>
       section 1
       playlists made by user
       ---
@@ -26,7 +27,7 @@ function home({ }) {
       recently played  href='show all'
     <button >user</button>
     <Playlist/>
-    </div>
+    </Layout>
   )
 }
 
