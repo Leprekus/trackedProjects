@@ -15,7 +15,12 @@ const Home: NextPage = () => {
   }, [ session ])
   console.log(session)
   //goes inside header
-  
+  const fetchPlaylists = async () => {
+    const request = await fetch('/api/user')
+    const user = await request.json()
+    console.log(user)
+    
+  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -39,6 +44,7 @@ const Home: NextPage = () => {
         </p>
           <button onClick={() => signIn()}>Sign in</button>
           <button onClick={() => signOut()}>Sign Out</button>
+          <button onClick={fetchPlaylists}>Playlist</button>
         <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
           <a
             href="https://nextjs.org/docs"
