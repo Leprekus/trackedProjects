@@ -21,7 +21,8 @@ export const authOptions:AuthOptions = {
         return {
           accessToken: account.access_token,
           accessTokenExpires: Date.now() + account.expires_in * 1000,
-          refreshToken: account.refresh_token
+          refreshToken: account.refresh_token,
+          user
         }
       }
       //Returns token if still valid
@@ -32,7 +33,7 @@ export const authOptions:AuthOptions = {
       return refreshAccessToken(token)
     },
     //Send token props to client
-    async session({ session, token, user }){
+    async session({ session, token }){
       session.accessToken = token.accessToken
       
       return session
@@ -40,3 +41,5 @@ export const authOptions:AuthOptions = {
   }
 }
 export default NextAuth(authOptions)
+
+//"BQAXTzuyZ1uGJximuWAcnocfFZbjjmUXWmD4rwimtXzj4lhqQA_ZfjYZ3q55Dbyl3B-Um5GWdxRyHgTaZUNDx6B_pt34b0Qw3b-GAxBjpj0NFQDpp0C8lVtrsWVbUuHHzW4OPfJpKMyYNefnalH8OgFBpSzTNote6HG0m6g71brIig7RWxg"
