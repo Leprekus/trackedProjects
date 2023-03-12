@@ -19,10 +19,11 @@ export const authOptions:AuthOptions = {
       //called whenever JWT is created
       if(account && user) {
         return {
+          ...token,
           accessToken: account.access_token,
-          accessTokenExpires: Date.now() + account.expires_in * 1000,
+          accessTokenExpires: Date.now() + account.expires_at! * 1000,
           refreshToken: account.refresh_token,
-          user
+          username: account.providerAccountId
         }
       }
       //Returns token if still valid
@@ -35,7 +36,7 @@ export const authOptions:AuthOptions = {
     //Send token props to client
     async session({ session, token }){
       session.accessToken = token.accessToken
-      
+      session.refreshToken = token.refreshToken
       return session
     },
   }
