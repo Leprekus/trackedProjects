@@ -1,11 +1,12 @@
 import { JWT } from 'next-auth/jwt'
 import spotifyWebApi from './SpotifyApi'
 
-export default async function refreshAccessToken(token:JWT) {
+export default async function refreshAccessToken(token:JWT):Promise<JWT> {
     try {
       spotifyWebApi.setAccessToken(token?.accessToken)
       spotifyWebApi.setRefreshToken(token?.refreshToken)
       const { body: refreshedToken } = await spotifyWebApi.refreshAccessToken();
+
       return {
         ...token,
         accessToken: refreshedToken.access_token,

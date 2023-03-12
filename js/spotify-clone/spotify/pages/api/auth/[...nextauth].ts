@@ -2,6 +2,7 @@ import  { AuthOptions, Session } from "next-auth"
 import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
 import refreshAccessToken from '../../../utils/refreshAccessToken'
+import { JWT } from 'next-auth/jwt'
 export const authOptions:AuthOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -14,18 +15,18 @@ export const authOptions:AuthOptions = {
   ],
   secret: process.env.NEXT_SECRET,
   callbacks: {
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user }):Promise<JWT>{
       //Persistent OAuth access token
       //called whenever JWT is created
       if(account && user) {
         return {
           ...token,
-          accessToken: account.access_token,
-          accessTokenExpires: Date.now() + account.expires_at! * 1000,
-          refreshToken: account.refresh_token,
+          accessToken: account.access_token!,
+          accessTokenExpires: Date.now() + account.expires_in! * 1000,
+          refreshToken: account.refresh_token!,
           username: account.providerAccountId
         }
-      }
+      } 
       //Returns token if still valid
       if(Date.now() < token.accessTokenExpires) {
         return token
@@ -37,6 +38,7 @@ export const authOptions:AuthOptions = {
     async session({ session, token }){
       session.accessToken = token.accessToken
       session.refreshToken = token.refreshToken
+      session.user.username = token.username
       
       return session
     },
