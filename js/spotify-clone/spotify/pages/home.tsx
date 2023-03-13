@@ -14,7 +14,7 @@ export async function getServerSideProps(context:Context) {
     }
   }
 }
-function home({ }) {
+function home() {
   
   return (
     <Layout>

@@ -6,10 +6,7 @@ export default async function refreshAccessToken(token:JWT):Promise<JWT> {
       spotifyWebApi.setAccessToken(token?.accessToken)
       spotifyWebApi.setRefreshToken(token?.refreshToken)
       const { body: refreshedToken } = await spotifyWebApi.refreshAccessToken();
-      fs.writeFile('./logs.txt', JSON.stringify({
-        message: 'token refreshed',
-        refreshedToken
-      }))
+      console.log('token refreshed ', refreshedToken)
       return {
         ...token,
         accessToken: refreshedToken.access_token,
@@ -17,10 +14,7 @@ export default async function refreshAccessToken(token:JWT):Promise<JWT> {
         refreshToken: refreshedToken.refresh_token ?? token.refresh_token //Fallback to previous refresh token
       }
     } catch(error) {
-      fs.writeFile('./logs.txt', JSON.stringify({
-        message: 'failed to refresh token',
-        error
-      }))      
+      console.log('failed to fetch token ', error)     
       return {
         ...token, 
         error: 'RefreshAccessTokenError'
