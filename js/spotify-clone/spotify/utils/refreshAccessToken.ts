@@ -1,6 +1,5 @@
 import { JWT } from 'next-auth/jwt'
 import spotifyWebApi from './SpotifyApi'
-const fs = require('fs')
 export default async function refreshAccessToken(token:JWT):Promise<JWT> {
     try {
       spotifyWebApi.setAccessToken(token?.accessToken)
@@ -14,7 +13,10 @@ export default async function refreshAccessToken(token:JWT):Promise<JWT> {
         refreshToken: refreshedToken.refresh_token ?? token.refresh_token //Fallback to previous refresh token
       }
     } catch(error) {
-      console.log('failed to fetch token ', error)     
+      console.log({
+        'failed to fetch token':error,
+        'token is': token
+      })     
       return {
         ...token, 
         error: 'RefreshAccessTokenError'

@@ -1,9 +1,9 @@
 import React from 'react'
-import CurrentlyPlaying from './CurrentlyPlaying'
+import CurrentlyPlaying from './Playback'
 
 function Bar() {
   return (
-    <div className='h-24 bg-black'>
+    <div className='bg-black'>
         <CurrentlyPlaying/>
     </div>
   )

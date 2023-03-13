@@ -3,6 +3,17 @@ export type Image = {
   heigh: number;
   width: number;
 };
+
+export type Artists = {
+  
+    external_url: string;
+    href: string;
+    id: string;
+    name: string;
+    type: string;
+    uri: string;
+  
+}
 export type UserPlaylist = {
   collaborative: boolean;
   description: string;
@@ -22,14 +33,7 @@ export type UserPlaylist = {
 
 export type Tracks = {
   album: {
-    artists: {
-      external_url: string;
-      href: string;
-      id: string;
-      name: string;
-      type: string;
-      uri: string;
-    }[];
+    artists: Artists[];
     images: Image[];
     name: string
   };
