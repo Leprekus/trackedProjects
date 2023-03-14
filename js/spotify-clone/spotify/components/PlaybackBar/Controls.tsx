@@ -1,28 +1,31 @@
 import React, { ReactComponentElement, useEffect, useState } from 'react'
-import playDesktop from '../../assets/play-desktop.png'
 import playMobile from '../../assets/play-mobile.png'
-import pauseDesktop from '../../assets/pause-desktop.png'
 import pauseMobile from '../../assets/pause-mobile.png'
 import Image from 'next/image'
+import shuffleWhite from '../../assets/shuffle.png'
+import shuffleGreen from '../../assets/shuffle-green.png'
+import previous from '../../assets/previous.png'
 
-function Button({ onClick, children }:any) {
+function Button({ onClick, children, className }:any) {
 
   return (
-    <button onClick={onClick} className='w-10 h-10 pl-1  bg-green-300'>
+    <button onClick={onClick} className={`w-5 h-5 ${className}`}>
       { children }
       </button>
   )
 }
 
-function Controls({ spotify, isPlaying }:any) {
-  const [toggle, setToggle] = useState(isPlaying)
-  useEffect(() => {
-    setToggle(isPlaying)
-  }, [isPlaying])
-  
-  console.log(toggle)
+function Controls({ spotify, isPlaying, setIsPlaying }:any) {
+  //const [toggle, setToggle] = useState(isPlaying ? true : false)
+  const [shuffle, setShuffle] = useState(false)
+  // useEffect(() => {
+  //   if(isPlaying !== toggle) {
+  //     setToggle(isPlaying)
+  //   }
+  // }, [isPlaying])
+  // console.log(isPlaying)
   const handleToggle = () =>{
-    if(toggle) {
+    if(isPlaying) {
       spotify.pause()
       .then(() => console.log('paused'))
       .catch((e:Error) => console.log(e))
@@ -31,10 +34,21 @@ function Controls({ spotify, isPlaying }:any) {
       .then(() => console.log('playing'))
       .catch((e:Error) => console.log(e))
     }
-    setToggle(!toggle)
+    setIsPlaying(!isPlaying)
+  }
+  const handleShuffle = () => {
+    spotify.setShuffle(!shuffle)
+    setShuffle(!shuffle)
   }
   return (
-    <div>{toggle ? 
+    <div className='text-white flex gap-x-2 mr-4'>
+      <Button onClick={handleShuffle} className='sm:hidden md:block p-0.5'>
+        <Image src={shuffle ? shuffleGreen : shuffleWhite} alt='shuffle'/>
+      </Button>
+      <Button onClick={() => spotify.skipToNext() } className='sm:hidden md:block p-1'>
+        <Image src={previous} alt=''/>
+      </Button>
+      {isPlaying ? 
       <Button onClick={handleToggle} device='mobile'>
         <Image 
         src={pauseMobile} 
@@ -42,11 +56,14 @@ function Controls({ spotify, isPlaying }:any) {
        </Button>
       :
         <Button onClick={handleToggle} display>
-        <Image 
+        <Image
         src={playMobile} 
         alt="media-controls" />
        </Button>
     }
+    <Button onClick={() => spotify.skipToPrevious()} className='sm:hidden md:block rotate-180 p-1'>
+        <Image src={previous} alt=''/>
+      </Button>
     </div>
   )
 }

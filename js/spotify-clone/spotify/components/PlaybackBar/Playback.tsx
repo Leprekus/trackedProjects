@@ -31,6 +31,7 @@ function CurrentlyPlaying() {
   const [playbackState, setPlaybackState] = useState<Playback>({});
   const [volume, setVolume] = useState<string>('0');
   const [progress, setProgress] = useState<string>('0');
+  const [isPlaying, setIsPlaying] = useState(false)
   //fetches data
   useEffect(() => {
     spotify
@@ -45,7 +46,6 @@ function CurrentlyPlaying() {
       })
       .catch((error) => console.log({ error }));
   }, [spotify]);
-
   //listens if device is playing
   useEffect(() => {
     let interval: any = null;
@@ -59,6 +59,7 @@ function CurrentlyPlaying() {
           if (progress > 85 || progress < 5) {
             setPlaybackState(res?.body);
           }
+          setIsPlaying(res?.body?.is_playing)
           setProgress(progress.toString());
         });
       }, 2000);
@@ -67,43 +68,41 @@ function CurrentlyPlaying() {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [playbackState]);
+  }, [playbackState?.is_playing]);
+
   return (
     <div>
-      <div
-        className='flex gap-x-4 flex-row md:w-1/4
-      p-4 items-center
-      text-white text-sm'
-      >
-        <img src={playbackState?.item?.album?.images[2]?.url} alt='' />
-        <div>
-          <p>
-            {playbackState?.item?.name} {'• '}
-            <span className='gap-x-1 text-gray-400'>
-              {playbackState?.item?.album?.artists.map(
-                (artist: Artists, i: number) => (
-                  <Link key={i} href={artist?.href}>
-                    {artist?.name}
-                  </Link>
-                )
-              )}
-            </span>
-          </p>
-          <p className='font-semibold text-green-400'>
-            {playbackState?.device?.name.toUpperCase()}
-          </p>
-          
+      <div className='w-full flex items-center justify-between'>
+        <div
+          className='flex gap-x-4 flex-row md:w-1/4
+        p-4 items-center
+        text-white text-sm'
+        >
+          <img src={playbackState?.item?.album?.images[2]?.url} alt='' />
+          <div>
+            <p>
+              {playbackState?.item?.name} {'• '}
+              <span className='gap-x-1 text-gray-400'>
+                {playbackState?.item?.album?.artists.map(
+                  (artist: Artists, i: number) => (
+                    <Link key={i} href={artist?.href}>
+                      {artist?.name}
+                    </Link>
+                  )
+                )}
+              </span>
+            </p>
+            <p className='font-semibold text-green-400'>
+              {playbackState?.device?.name.toUpperCase()}
+            </p>
+          </div>
         </div>
+        <Controls spotify={spotify} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
       </div>
-      <Controls spotify={spotify} isPlaying={playbackState.is_playing}/>
       <Slider className='hidden md:block' onChange={setVolume} value={volume} />
       Timestamp
       <div className='w-full h-1 bg-gray-800'>
-        <div
-          className='bg-green-400 h-1'
-          style={{ width: `${progress}%` }}
-        />
-        
+        <div className='bg-green-400 h-1' style={{ width: `${progress}%` }} />
       </div>
     </div>
   );
