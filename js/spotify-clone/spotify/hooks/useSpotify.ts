@@ -4,7 +4,6 @@ import spotifyWebApi from '../utils/SpotifyApi';
 
 export default function useSpotify() {
   const { data: session } = useSession();
-console.log({session})
   useEffect(() => {
     if (session) {
       if (session?.error === 'RefreshAccessTokenError') {

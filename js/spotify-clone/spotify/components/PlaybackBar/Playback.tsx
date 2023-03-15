@@ -43,6 +43,7 @@ function CurrentlyPlaying() {
         setPlaybackState(data?.body);
         setVolume(data?.body?.device?.volume_percent?.toString()!);
         setProgress(progress.toString());
+        console.log({ data })
       })
       .catch((error) => console.log({ error }));
   }, [spotify]);
@@ -66,7 +67,6 @@ function CurrentlyPlaying() {
     }
     return () => clearInterval(interval);
   }, [isPlaying]);
-
   return (
     <div>
       <div className='w-full flex items-center justify-between'>
