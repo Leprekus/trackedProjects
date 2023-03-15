@@ -24,14 +24,13 @@ function Controls({ spotify, isPlaying, setIsPlaying }:any) {
   const handleToggle = () =>{
     if(isPlaying) {
       spotify.pause()
-      .then(() => console.log('paused'))
+      .then((res:Response) => res.statusCode === 204 ? setIsPlaying(!isPlaying) : console.log({ error: res.statusCode}))
       .catch((e:Error) => console.log(e))
     } else {
       spotify.play()
-      .then(() => console.log('playing'))
+      .then((res:Response) => res.statusCode === 204 ? setIsPlaying(!isPlaying) : console.log({ error: res.statusCode}))
       .catch((e:Error) => console.log(e))
     }
-    setIsPlaying(!isPlaying)
   }
   const handleShuffle = () => {
     spotify.setShuffle(!shuffle).then((res:Response) => {

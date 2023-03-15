@@ -49,27 +49,23 @@ function CurrentlyPlaying() {
   //listens if device is playing
   useEffect(() => {
     let interval: any = null;
-    if (playbackState?.is_playing) {
+    if (isPlaying) {
       interval = setInterval(() => {
         spotify.getMyCurrentPlaybackState().then((res: Response) => {
           const progress = Math.floor(
             (res?.body?.progress_ms! * 100) / res?.body?.item?.duration_ms!
           );
-          //updates song cover as well
-          // if (progress > 85 || progress < 5) {
-          //   setPlaybackState(res?.body);
-          // }
           setPlaybackState(res?.body);
           setIsPlaying(res?.body?.is_playing)
           setProgress(progress.toString());
         });
       }, 2000);
     }
-    if (!playbackState?.is_playing) {
+    if (!isPlaying) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [playbackState?.is_playing]);
+  }, [isPlaying]);
 
   return (
     <div>
