@@ -56,9 +56,10 @@ function CurrentlyPlaying() {
             (res?.body?.progress_ms! * 100) / res?.body?.item?.duration_ms!
           );
           //updates song cover as well
-          if (progress > 85 || progress < 5) {
-            setPlaybackState(res?.body);
-          }
+          // if (progress > 85 || progress < 5) {
+          //   setPlaybackState(res?.body);
+          // }
+          setPlaybackState(res?.body);
           setIsPlaying(res?.body?.is_playing)
           setProgress(progress.toString());
         });

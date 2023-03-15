@@ -6,6 +6,9 @@ import shuffleWhite from '../../assets/shuffle.png'
 import shuffleGreen from '../../assets/shuffle-green.png'
 import previous from '../../assets/previous.png'
 
+interface Response {
+  statusCode: number
+}
 function Button({ onClick, children, className }:any) {
 
   return (
@@ -18,12 +21,6 @@ function Button({ onClick, children, className }:any) {
 function Controls({ spotify, isPlaying, setIsPlaying }:any) {
   //const [toggle, setToggle] = useState(isPlaying ? true : false)
   const [shuffle, setShuffle] = useState(false)
-  // useEffect(() => {
-  //   if(isPlaying !== toggle) {
-  //     setToggle(isPlaying)
-  //   }
-  // }, [isPlaying])
-  // console.log(isPlaying)
   const handleToggle = () =>{
     if(isPlaying) {
       spotify.pause()
@@ -37,8 +34,9 @@ function Controls({ spotify, isPlaying, setIsPlaying }:any) {
     setIsPlaying(!isPlaying)
   }
   const handleShuffle = () => {
-    spotify.setShuffle(!shuffle)
-    setShuffle(!shuffle)
+    spotify.setShuffle(!shuffle).then((res:Response) => {
+      return res.statusCode === 204 ? setShuffle(!shuffle) : console.log({ error: res.statusCode })
+    })
   }
   return (
     <div className='text-white flex gap-x-2 mr-4'>
