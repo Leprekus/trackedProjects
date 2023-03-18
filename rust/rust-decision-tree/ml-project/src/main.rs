@@ -2,6 +2,8 @@ use csv::Reader;
 use std::fs::File;
 use ndarray::{ Array, Array1, Array2 };
 use linfa::Dataset;
+use linfa_trees::DecisionTree;
+use linfa::prelude::*;
 
 fn get_dataset() -> Dataset<f32, i32, ndarray::Dim<[usize; 1]>> {
   let mut reader = Reader::from_path("./src/heart.csv").unwrap();
@@ -54,7 +56,18 @@ fn get_data(reader: &mut Reader<File>) -> Vec<Vec<f32>> {
 }
 
    fn main() {
-    let dataset = get_dataset();
-    println!("{:?}", dataset);
+    //let dataset = get_dataset();
+    //println!("{:?}", dataset);
+    let (train, test) = linfa_datasets::iris()
+    .split_with_ratio(0.9);
+
+    let model = DecisionTree::params()
+    .fit(&train).unwrap();
+
+    let predictions = model.predict(&test);
+
+    println!("{:?}", predictions);
+    println!("{:?}", test.targets);
  }
+
  
