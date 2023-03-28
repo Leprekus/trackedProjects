@@ -67,6 +67,7 @@ function CurrentlyPlaying() {
     }
     return () => clearInterval(interval);
   }, [isPlaying]);
+  
   return (
     <div>
       <div className='w-full flex items-center justify-between'>

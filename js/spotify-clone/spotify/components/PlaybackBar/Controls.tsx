@@ -37,6 +37,7 @@ function Controls({ spotify, isPlaying, setIsPlaying }:any) {
       return res.statusCode === 204 ? setShuffle(!shuffle) : console.log({ error: res.statusCode })
     })
   }
+
   return (
     <div className='text-white flex gap-x-2 mr-4'>
       <Button onClick={handleShuffle} className='sm:hidden md:block p-0.5'>

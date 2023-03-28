@@ -11,7 +11,7 @@ export default function useSpotifySDK ({ token }:Props) {
         script.async = true;
 
         document.appendChild(script);
-
+      
         window.onSpotifyWebPlaybackSDKReady = () => {
             const player = new window.Spotify.Player({
               name: "Web Playback SDK",

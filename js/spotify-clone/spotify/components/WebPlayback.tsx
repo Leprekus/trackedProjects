@@ -1,4 +1,5 @@
 import { VFC, useState, useEffect } from "react";
+import useSpotify from '../hooks/useSpotify';
 
 type Props = {
   token: string;
@@ -10,6 +11,7 @@ export const WebPlayback: VFC<Props> = ({ token }) => {
   const [player, setPlayer] = useState<Spotify.Player | null>(null);
   const [current_track, setTrack] = useState<Spotify.Track | null>(null);
 
+  const spotify = useSpotify()
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -25,13 +27,13 @@ export const WebPlayback: VFC<Props> = ({ token }) => {
         },
         volume: 0.5,
       });
-
       setPlayer(player);
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
+        console.log(spotify.play({ device_id: device_id, uris:[ "spotify:track:5MxFWjuqQIsbNWbMdMdbli"] }))
+        
       });
-
       player.addListener("not_ready", ({ device_id }) => {
         console.log("Device ID has gone offline", device_id);
       });
