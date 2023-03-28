@@ -3,6 +3,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect } from 'react'
+import { WebPlayback } from '../components/WebPlayback'
 
 const Home: NextPage = () => {
 
@@ -94,6 +95,7 @@ const Home: NextPage = () => {
         </div>
       </main>
 
+      <WebPlayback token={session?.accessToken!}/>
       <footer className="flex h-24 w-full items-center justify-center border-t">
         <a
           className="flex items-center justify-center gap-2"
