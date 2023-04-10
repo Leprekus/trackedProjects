@@ -3,12 +3,9 @@ import React from 'react'
 import Header from '../../components/Header'
 import { sanityClient, urlFor } from '../../sanity'
 import { PostProps } from '../../typings'
+import PortableText from 'react-portable-text'
 import Comments from '../../components/Comments'
-
-import userPNG from '../../assets/user.png'
-import blogPlaceholder from '../../assets/placeholder-image.png'
-
-//prebuilds routes
+//prebuilds routes in advance
 export const getStaticPaths:GetStaticPaths = async () => {
   const query = `*[_type == 'post'] {
     _id, 
@@ -35,11 +32,11 @@ export const getStaticPaths:GetStaticPaths = async () => {
 export const getStaticProps:GetStaticProps = async ({ params }) => {
   //$slug acts as a placeholder
   //res is an array and [0] returns first item
-  const query = `*[_type =='userPost' && slug.current == $slug][0]{
+  const query = `*[_type =='post' && slug.current == $slug][0]{
     _id, 
     _createdAt, 
     title, 
-    user -> {
+    author -> {
       name, 
       image, 
     }, 
@@ -67,20 +64,20 @@ export const getStaticProps:GetStaticProps = async ({ params }) => {
     props: {
       post,
     },
-    revalidate: 120, //updates cached version after 60 seconds
+    revalidate: 60, //updates cached version after 60 seconds
   }
 }
 interface Props {
   post:PostProps
 }
 function Slug({ post }:Props) {
-  console.log(typeof post.body)
+  console.log(post)
   return (
     <div>
       <Header/>
       <img 
       className='w-full h-40 object-contain'
-      src={post.mainImage !== null ? urlFor(post.mainImage).toString() : blogPlaceholder.src}
+      src={urlFor(post.mainImage)}
       alt="banner" />
 
       <article className='max-w-3xl mx-auto p-5'>
@@ -90,12 +87,31 @@ function Slug({ post }:Props) {
         <div className='flex items-center space-x-2'>
           <img 
           className='h-10 w-10 rounded-full'
-          src={post.user.image !== null ? urlFor(post.mainImage).toString() : userPNG.src} 
+          src={urlFor(post.author.image)} 
           alt="" />
-          <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.user.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
+          <p className='font-extralight text-sm'>Blog post by <span className='text-green-600'>{post.author.name}</span> - Published at {new Date(post._createdAt).toLocaleString()}</p>
         </div>
         <div className='mt-10'>
-          <div dangerouslySetInnerHTML={{__html: post.body?.toString()!}}></div>
+          <PortableText
+            dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
+            projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
+            content={post.body}
+            //serializers are used to dictate how the HTML is parsed
+            serializers={{
+              h1: (props: any) => (
+                <h1 className='text-2xl font-bold my-5'{ ...props }/>
+              ),
+              h2: (props: any) => (
+                <h1 className='text-xl font-bold my-5'{ ...props }/>
+              ),
+              li: ({ children }: any) => (
+                <li className='ml-4 list-disc'>{ children }</li>
+              ),
+              ul: ({ href, children }: any) => (
+                <a href={ href } className='text-blue-500 hover:underline'>{ children }</a>
+              )
+            }}
+          />
         </div>
       </article>
       <hr className='mw-w-lg my-5 mx-auto border border-yellow-500'/>
@@ -105,7 +121,7 @@ function Slug({ post }:Props) {
         
         <h3 className='text-4xl'>Comments</h3>
         <hr className='pb-2'/>
-        {post.comments!.map(comment => (
+        {post.comments.map(comment => (
           <div key={comment._id} className='py-2'>
             <p>
               <span className='text-green-600'>

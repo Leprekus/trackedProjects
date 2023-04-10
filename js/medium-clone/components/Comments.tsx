@@ -10,6 +10,7 @@ interface IformInput {
   //indicates that param is optional
   //lastName?: string
 }
+
 interface Props {
   post: PostProps;
 }
