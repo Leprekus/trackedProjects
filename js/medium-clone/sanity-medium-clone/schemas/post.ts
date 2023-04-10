@@ -54,6 +54,12 @@ export default defineType({
       title: 'Body',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'user',
+      title: 'User',
+      type: 'reference',
+      to: {type: 'user'},
+    }),
   ],
 
   preview: {

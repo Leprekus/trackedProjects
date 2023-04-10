@@ -66,3 +66,28 @@ Then use the *register* attribute in each input to grab the information.
 The form uses the *handleSubmit* destructured from the useForm hook to handle the form submission. This method invokes the form handler. i.e handleSubmit(doSomethingWithMyForm)
 
 Errors can be displayed by error.*inputName* && *error handlement*
+
+Delete a Document in Sanity:
+
+    const mutations = [{
+        delete: {
+          id: 'rN1qi54kvWKs5FTfdm9Qsb',
+        }
+      }]
+      
+      const del = fetch(`https://${config.projectId}.api.sanity.io/v2021-06-07/data/mutate/${config.dataset}`, {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${config.token}`
+        },
+        body: JSON.stringify({mutations})
+      })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.error(error))
+
+## Todo
+- [ ] render user posts in dashboard
+- [ ] Protect user routes 
+- [ ] add post preview in user dashboard
