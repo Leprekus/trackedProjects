@@ -1,3 +1,0 @@
-Location-based Reddit client: You could develop a Reddit client that is specifically designed for users in a certain location. For example, you could create a Reddit client that is optimized for users in a specific city or state, allowing them to easily find local events, discussions, and news.
-
-Personalized Reddit client: You could create a Reddit client that learns from a user's behavior and interests in order to provide personalized recommendations. By tracking which subreddits a user visits most frequently, which posts they upvote or downvote, and other metrics, your Reddit client could recommend new subreddits, users to follow, and content to read.
